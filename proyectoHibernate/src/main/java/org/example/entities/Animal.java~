@@ -120,7 +120,7 @@ public class Animal implements Serializable {
                 "recien abandonado", ESTADO.RECIEN_ABANDONADO,
                 "recién abandonado", ESTADO.RECIEN_ABANDONADO,
                 "tiempo en refugio", ESTADO.TIEMPO_EN_REFUGIO,
-                "proximamente acogida", ESTADO.PROXIMAMENTE_ACOGIDA,
+                "proximamente acogida", ESTADO.PROXIMAMENTE_ACOGIDA
                 "próximamente acogida", ESTADO.PROXIMAMENTE_ACOGIDA
         );
 
