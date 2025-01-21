@@ -73,7 +73,7 @@ public class Animal implements Serializable {
 
     public void setId(Integer id) {this.id = id;}
 
-    public void setNombre(String nombre) {this.nombreAnimal = nombre;}
+    public void setNombre(String nombre) { this.nombreAnimal = capitalizarPrimeraLetra(nombre);}
 
     public void setEdad(Integer edad) {this.edadAnimal = edad;}
 
@@ -106,7 +106,7 @@ public class Animal implements Serializable {
         this.especie = capitalizarPrimeraLetra(aux);
     }
 
-    public void setDescripcion(String descripcion) {this.descripcion = descripcion;}
+    public void setDescripcion(String descripcion) {this.descripcion = capitalizarPrimeraLetra(descripcion);}
 
     public void setEstado(String estado) {
 
