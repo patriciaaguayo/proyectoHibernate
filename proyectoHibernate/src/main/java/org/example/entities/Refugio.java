@@ -2,13 +2,16 @@ package org.example.entities;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "refugio")
-public class Refugio {
+public class Refugio implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @OneToOne
+    @JoinColumn(name = "Animal_Id", nullable = false)
+    private Animal animal;
 
     @Column(name = "Nombre_Refugio", nullable = false)
     private String nombreRefugio;
@@ -21,13 +24,15 @@ public class Refugio {
 
     public Refugio() {}
 
-    public Refugio(Familia familia) {
+    public Refugio(Familia familia, Animal animal) {
         this.familia = familia;
+        this.animal = animal;
         this.nombreRefugio = "Prado Verde";
     }
 
-    public Refugio(Familia familia, String nombreRefugio) {
+    public Refugio(Familia familia, Animal animal, String nombreRefugio) {
         this.familia = familia;
+        this.animal = animal;
         this.nombreRefugio = nombreRefugio;
     }
 
@@ -35,13 +40,15 @@ public class Refugio {
 
     public Familia getFamilia() { return familia; }
 
-    public Integer getId() { return id; }
+    public Animal getAnimal() { return animal; }
 
     public String getNombreRefugio() { return nombreRefugio; }
 
     // SETTERS
 
     public void setFamilia(Familia familia) { this.familia = familia; }
+
+    public void setAnimal(Animal animal) { this.animal = animal; }
 
     public void setNombreRefugio(String nombreRefugio) { this.nombreRefugio = nombreRefugio; }
 
@@ -50,8 +57,8 @@ public class Refugio {
     @Override
     public String toString() {
         return "Refugio{" +
-                "id=" + id +
-                ", familia=" + familia +
+                "familia=" + familia +
+                ", animal=" + animal +
                 ", nombreRefugio='" + nombreRefugio + '\'' +
                 '}';
     }

@@ -27,8 +27,7 @@ public class Familia implements Serializable {
 
     // CONSTRUCTORES
 
-    public Familia() {
-    }
+    public Familia() {}
 
     public Familia(String dni, Integer edad, String nombre, String ciudad) {
         this.dni = dni;

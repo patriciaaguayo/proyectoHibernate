@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import java.io.Serializable;
+import java.util.Scanner;
 
 @Entity
 @Table(name = "familias")
@@ -77,6 +78,28 @@ public class Familia implements Serializable {
         return palabra.substring(0, 1).toUpperCase() + palabra.substring(1).toLowerCase();
     }
 
-    
+    public String ingresarDNI() {
+        
+        Scanner leer = new Scanner(System.in);
+
+        String dni;
+        String[] letras = null;
+        do {
+            System.out.print("\n Introduce el DNI (8 dígitos y una letra): ");
+            dni = leer.next().toUpperCase();
+            if (!dni.matches("\\d{8}[A-Za-z]")) {
+                System.out.println("\n El formato del DNI no es correcto.");
+            } else {
+                letras = new String[]{"T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E"};
+                int numero = Integer.parseInt(dni.substring(0, 8));
+                int resto = numero % 23;
+                String letraCorrecta = letras[resto];
+                if (!dni.substring(8).equals(letraCorrecta)) {
+                    System.out.println("\n La letra del DNI no corresponde con el número.");
+                }
+            }
+        } while (!dni.matches("\\d{8}[A-Za-z]") || !dni.substring(8).equals(letras[Integer.parseInt(dni.substring(0, 8)) % 23]));
+        return dni;
+    }
 
 }

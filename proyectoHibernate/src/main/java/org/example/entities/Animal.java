@@ -28,10 +28,6 @@ public class Animal implements Serializable {
     @Column(name="Estado")
     private String estado;
 
-    @ManyToOne
-    @JoinColumn(name = "Nombre_Refugio", nullable = false)
-    private Refugio refugio;
-
     // Enumerados
 
     private enum ESPECIE {
@@ -44,13 +40,12 @@ public class Animal implements Serializable {
 
     public Animal() {}
 
-    public Animal(String nombre, Integer edad, String especie, String descripcion, String estado, Refugio refugio) {
+    public Animal(String nombre, Integer edad, String especie, String descripcion, String estado) {
         this.nombreAnimal = nombre;
         this.edadAnimal = edad;
         this.especie = especie;
         this.descripcion = descripcion;
         this.estado = estado;
-        this.refugio = refugio;
     }
 
     // GETTERS
@@ -66,8 +61,6 @@ public class Animal implements Serializable {
     public String getDescripcion() {return descripcion;}
 
     public String getEstado() {return estado;}
-
-    public Refugio getRefugio() {return refugio;}
 
     // SETTERS
 
@@ -133,8 +126,6 @@ public class Animal implements Serializable {
         this.estado = capitalizarPrimeraLetra(aux);
 
     }
-
-    public void setRefugio(Refugio refugio) {this.refugio = refugio;}
 
     // TO STRING
 
