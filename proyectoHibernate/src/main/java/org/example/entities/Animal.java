@@ -28,6 +28,9 @@ public class Animal implements Serializable {
     @Column(name="Estado")
     private String estado;
 
+    @Column(name = "Adoptado", nullable = false)
+    private boolean adoptado = false;
+
     // Enumerados
 
     private enum ESPECIE {
@@ -46,6 +49,7 @@ public class Animal implements Serializable {
         this.especie = especie;
         this.descripcion = descripcion;
         this.estado = estado;
+        this.adoptado = false;
     }
 
     // GETTERS
@@ -61,6 +65,8 @@ public class Animal implements Serializable {
     public String getDescripcion() {return descripcion;}
 
     public String getEstado() {return estado;}
+
+    public boolean isAdoptado() { return adoptado; }
 
     // SETTERS
 
@@ -127,16 +133,19 @@ public class Animal implements Serializable {
 
     }
 
+    public void setAdoptado(boolean adoptado) { this.adoptado = adoptado; }
+
     // TO STRING
 
     @Override
     public String toString() {
         return "Id: " + id +
-                ", Nombre: " + nombreAnimal + '\'' +
+                ", Nombre: " + nombreAnimal +
                 ", Edad: " + edadAnimal +
-                ", Especie: " + especie + '\'' +
-                ", Descripcion: " + descripcion + '\'' +
-                ", Estado: " + estado + '\'';
+                ", Especie: " + especie +
+                ", Descripcion: " + descripcion +
+                ", Estado: " + estado +
+                ", Adoptado: " + adoptado;
     }
 
     // MÉTODOS
