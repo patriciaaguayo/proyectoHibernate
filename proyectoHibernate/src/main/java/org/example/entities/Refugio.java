@@ -14,7 +14,7 @@ public class Refugio implements Serializable {
     private Animal animal;
 
     @Column(name = "Nombre_Refugio", nullable = false)
-    private String nombreRefugio;
+    private String nombreRefugio = "Prado Verde";
 
     @ManyToOne
     @JoinColumn(name = "Dni", nullable = false)

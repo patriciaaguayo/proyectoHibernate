@@ -112,9 +112,9 @@ public class Animal implements Serializable {
         Map<String, ESTADO> mapaEstados = Map.of(
                 "recien abandonado", ESTADO.RECIEN_ABANDONADO,
                 "recién abandonado", ESTADO.RECIEN_ABANDONADO,
-                "tiempo en refugio", ESTADO.TIEMPO_EN_REFUGIO,
-                "proximamente acogida", ESTADO.PROXIMAMENTE_ACOGIDA,
-                "próximamente acogida", ESTADO.PROXIMAMENTE_ACOGIDA
+                "tiempo en el refugio", ESTADO.TIEMPO_EN_REFUGIO,
+                "proximamente en acogida", ESTADO.PROXIMAMENTE_ACOGIDA,
+                "próximamente en acogida", ESTADO.PROXIMAMENTE_ACOGIDA
         );
 
         ESTADO auxEnum = mapaEstados.get(aux);
@@ -131,14 +131,12 @@ public class Animal implements Serializable {
 
     @Override
     public String toString() {
-        return "Animal{" +
-                "id=" + id +
-                ", nombre='" + nombreAnimal + '\'' +
-                ", edad=" + edadAnimal +
-                ", especie='" + especie + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", estado='" + estado + '\'' +
-                '}';
+        return "Id: " + id +
+                ", Nombre: " + nombreAnimal + '\'' +
+                ", Edad: " + edadAnimal +
+                ", Especie: " + especie + '\'' +
+                ", Descripcion: " + descripcion + '\'' +
+                ", Estado: " + estado + '\'';
     }
 
     // MÉTODOS
