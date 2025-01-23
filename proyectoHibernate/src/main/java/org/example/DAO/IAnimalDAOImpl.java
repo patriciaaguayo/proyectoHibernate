@@ -116,4 +116,20 @@ public class IAnimalDAOImpl implements IAnimalDAO {
             throw new RuntimeException("Error al buscar animales por estado de adopción", e);
         }
     }
+
+    /**
+     * Busca un animal por su ID.
+     *
+     * @param idAnimal ID del animal a buscar.
+     * @return El animal con el ID especificado, o null si no se encuentra.
+     */
+    @Override
+    public Animal buscarAnimalPorId(Integer idAnimal) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Animal animal = session.get(Animal.class, idAnimal);
+        session.close();
+        return animal;
+    }
+
+
 }

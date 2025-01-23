@@ -46,4 +46,11 @@ public interface IAnimalDAO {
      * @return Lista de animales con el estado de adopción indicado.
      */
     List<Animal> buscarPorEstadoAdopcion(boolean adoptado);
+
+    /**
+     * Busca un animal por su ID.
+     * @param idAnimal ID del animal a buscar.
+     * @return El animal con el ID especificado, o null si no se encuentra.
+     */
+    Animal buscarAnimalPorId(Integer idAnimal);
 }

@@ -10,41 +10,10 @@ public interface IRefugioDAO {
 
     /**
      *
-     * @param refugio se le pasa el refugio a guardar
+     * @param refugio
      */
 
-    void registrarAdopcion(Refugio refugio);
-
-    /**
-     *
-     * @return obtiene todas las adopciones del refugio
-     */
-
-    List<Refugio> obtenerAdopciones(String refugio);
-
-    /**
-     *
-     * @param dni se le pasa el dni de la familia o representante
-     * @return devuelve los animales acogidos por esa familia
-     */
-
-    Refugio buscarAdopcionPorDni(String dni);
-
-    /**
-     *
-     * @param dni
-     * @return
-     */
-
-    Familia buscarFamiliaPorDni(String dni);
-
-    /**
-     *
-     * @param id
-     * @return
-     */
-
-    Animal buscarAnimalPorId(int id);
+    void guardarRefugio(Refugio refugio);
 
     /**
      *
@@ -52,6 +21,20 @@ public interface IRefugioDAO {
      */
 
     void actualizarAnimal(Animal animal);
+
+    /**
+     *
+     * @return
+     */
+
+    List<Familia> obtenerFamilias();
+
+    /**
+     *
+     * @return
+     */
+
+    List<Animal> obtenerAnimalesDisponibles();
 
 
 }
