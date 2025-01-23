@@ -2,6 +2,7 @@ package org.example.DAO;
 
 import org.example.entities.Animal;
 import org.example.entities.Familia;
+import org.example.entities.Refugio;
 
 import java.util.List;
 
@@ -9,28 +10,48 @@ public interface IRefugioDAO {
 
     /**
      *
-     * @param animal se le pasa el animal que va a ser adoptado
-     * @param familia se le pasa la familia que lo adopta
-     * @param nombreRefugio se le pasa el nombre del refugio
+     * @param refugio se le pasa el refugio a guardar
      */
 
-    void registrarAdopcion(Animal animal, Familia familia, String nombreRefugio);
+    void registrarAdopcion(Refugio refugio);
 
     /**
      *
-     * @param nombreRefugio se le pasa el nombre del refugio
-     * @return la lista de animales que han sido adoptados en el refugio
+     * @return obtiene todas las adopciones del refugio
      */
 
-    List<Animal> obtenerAnimalesPorRefugio(String nombreRefugio);
+    List<Refugio> obtenerAdopciones(String refugio);
 
     /**
      *
-     * @param familia se le pasa la familia
-     * @return la lista de animales que han sido adoptados por la familia en cuestión
+     * @param dni se le pasa el dni de la familia o representante
+     * @return devuelve los animales acogidos por esa familia
      */
 
-    List <Animal> obtenerAnimalesPorFamilia(Familia familia);
+    Refugio buscarAdopcionPorDni(String dni);
+
+    /**
+     *
+     * @param dni
+     * @return
+     */
+
+    Familia buscarFamiliaPorDni(String dni);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+
+    Animal buscarAnimalPorId(int id);
+
+    /**
+     *
+     * @param animal
+     */
+
+    void actualizarAnimal(Animal animal);
 
 
 }

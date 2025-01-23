@@ -119,6 +119,8 @@ public class Main {
     public static void menuFamilias() {
         Scanner scanner = new Scanner(System.in);
 
+        GestionFamilia gestor = new GestionFamilia();
+
         while (true) {
             System.out.println("\n ----- Menu Familias -----");
             System.out.println("\n 1. Registrar familia");
@@ -137,20 +139,20 @@ public class Main {
                 switch (opcionInt) {
 
                     case 1:
-                        System.out.println("\n Has seleccionado la opción 1");
+                        gestor.registrarFamilia();
                         break;
 
                     case 2:
-                        System.out.println("\n Has seleccionado la opción 2");
+                        gestor.mostrarFamilias();
                         break;
 
                     case 3:
-                        System.out.println("\n Has seleccionado la opción 3");
+                        gestor.eliminarFamilia();
                         return;
 
                     case 4:
-                        System.out.println("\n Has seleccionado la opción 4");
-                        return;
+                        gestor.buscarFamiliaPorDNI();
+                        break;
 
                     case 5:
                         System.out.println("\n Volviendo al menú principal...");
@@ -175,6 +177,8 @@ public class Main {
     public static void menuAdopciones() {
         Scanner scanner = new Scanner(System.in);
 
+        GestionRefugio gestor = new GestionRefugio();
+
         while (true) {
             System.out.println("\n ----- Menu Adopciones -----");
             System.out.println("\n 1. Realizar adopcion");
@@ -192,15 +196,15 @@ public class Main {
                 switch (opcionInt) {
 
                     case 1:
-                        System.out.println("\n Has seleccionado la opción 1");
+                        gestor.realizarAdopcion();
                         break;
 
                     case 2:
-                        System.out.println("\n Has seleccionado la opción 2");
+                        gestor.mostrarAdopciones();
                         break;
 
                     case 3:
-                        System.out.println("\n Has seleccionado la opción 3");
+                        gestor.buscarAdopcionPorDni();
                         break;
 
                     case 4:

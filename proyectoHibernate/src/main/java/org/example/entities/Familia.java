@@ -60,12 +60,10 @@ public class Familia implements Serializable {
 
     @Override
     public String toString() {
-        return "Familia{" +
-                "dni='" + dni + '\'' +
-                ", edad=" + edadPersona +
-                ", nombre='" + nombrePersona + '\'' +
-                ", ciudad='" + ciudad + '\'' +
-                '}';
+        return "\n Dni: " + dni +
+                ", Nombre: " + nombrePersona +
+                ", Edad: " + edadPersona +
+                ", Ciudad: " + ciudad;
     }
 
     // MÉTODOS
