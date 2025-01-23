@@ -131,19 +131,17 @@ public class GestionRefugio {
 
         // Verificar si la familia tiene adopciones
         if (adopcionesFamilia.isEmpty()) {
-            System.out.println("\n No se encontraron adopciones para la familia con DNI: " + dniFamilia);
+            System.out.println("No se encontraron adopciones para la familia con DNI: " + dniFamilia);
             return;
         }
 
-        System.out.println("\n ADOPCIONES REALIZADAS POR LA FAMILIA CON DNI: " + dniFamilia);
-
         // Mostrar la información de la familia y los animales adoptados
         Familia familia = adopcionesFamilia.get(0).getFamilia(); // Todas las adopciones tienen la misma familia
-        System.out.println("\n Familia: " + familia.getNombre() + " (DNI: " + familia.getDni() + ")");
+        System.out.println("Familia: " + familia.getNombre() + " (DNI: " + familia.getDni() + ")");
 
         for (Refugio refugio : adopcionesFamilia) {
             Animal animal = refugio.getAnimal();
-            System.out.println("\n\t - Animal Adoptado: [ID: " + animal.getId() + ", Nombre: " + animal.getNombre() + ", Edad: " + animal.getEdad() + "]");
+            System.out.println(" - Animal Adoptado: [ID: " + animal.getId() + ", Nombre: " + animal.getNombre() + ", Edad: " + animal.getEdad() + "]");
         }
     }
 }

@@ -204,7 +204,7 @@ public class Main {
                         break;
 
                     case 3:
-                        //gestor.buscarAdopcionPorDni();
+                        gestor.mostrarAdopcionesPorFamilia();
                         break;
 
                     case 4:
