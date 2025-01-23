@@ -36,13 +36,5 @@ public interface IRefugioDAO {
 
     List<Animal> obtenerAnimalesDisponibles();
 
-    /**
-     * Obtiene una lista de adopciones realizadas, mostrando el nombre de la familia/persona
-     * con su DNI, y los animales que han adoptado.
-     *
-     * @return Una lista de adopciones realizadas.
-     */
-
-    List<Refugio> obtenerAdopcionesRealizadas();
 
 }

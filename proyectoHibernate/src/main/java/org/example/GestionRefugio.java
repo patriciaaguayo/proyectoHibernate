@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.DAO.IAnimalDAOImpl;
 import org.example.DAO.IFamiliaDAO;
 import org.example.DAO.IFamiliaDAOImpl;
 import org.example.DAO.IRefugioDAOImpl;
@@ -14,10 +15,12 @@ public class GestionRefugio {
 
     IRefugioDAOImpl refugioDAO;
     IFamiliaDAOImpl familiaDAO;
+    IAnimalDAOImpl animalDAO;;
 
     public GestionRefugio() {
         refugioDAO = new IRefugioDAOImpl();
         familiaDAO = new IFamiliaDAOImpl();
+        animalDAO = new IAnimalDAOImpl();
     }
 
     public void realizarAdopcion() {
@@ -55,18 +58,42 @@ public class GestionRefugio {
 
         // Buscar la familia y el animal
         Familia familia = familiaDAO.buscarPorDNI(dniFamilia);
-        Animal animal = refugioDAO.obtenerAnimalPorId(idAnimal);
+        Animal animal = animalDAO.buscarAnimalPorId(idAnimal);
 
         // Crear un nuevo refugio
         Refugio refugio = new Refugio();
         refugio.setFamilia(familia);
         refugio.setAnimal(animal);
-        refugio.setNombreRefugio("Refugio de " + familia.getNombre());
+        refugio.setNombreRefugio("Prado Verde");
         refugioDAO.guardarRefugio(refugio);
 
         // Actualizar el estado del animal
         animal.setEstado("Próximamente en acogida");
         animal.setAdoptado(true);
         refugioDAO.actualizarAnimal(animal);
+    }
+
+    // Nuevo método: Listar adopciones realizadas
+
+    public void mostrarAdopciones() {
+        System.out.println("\nAdopciones realizadas:");
+
+        // Obtener adopciones realizadas
+        List<Refugio> adopciones = refugioDAO.obtenerAdopcionesRealizadas();
+
+        // Verificar si hay adopciones
+        if (adopciones.isEmpty()) {
+            System.out.println("No se han realizado adopciones todavía.");
+            return;
+        }
+
+        // Mostrar la información de las adopciones
+        for (Refugio refugio : adopciones) {
+            Familia familia = refugio.getFamilia();
+            Animal animal = refugio.getAnimal();
+
+            System.out.println("Familia: " + familia.getNombre() + " (DNI: " + familia.getDni() + ")");
+            System.out.println(" - Animal Adoptado: [ID: " + animal.getId() + ", Nombre: " + animal.getNombre() + ", Edad: " + animal.getEdad() + "]");
+        }
     }
 }

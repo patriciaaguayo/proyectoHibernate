@@ -200,7 +200,7 @@ public class Main {
                         break;
 
                     case 2:
-                        gestor.mostrarAdopciones();
+                        //gestor.mostrarAdopciones();
                         break;
 
                     case 3:

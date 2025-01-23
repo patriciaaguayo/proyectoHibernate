@@ -44,11 +44,11 @@ public class Animal implements Serializable {
     public Animal() {}
 
     public Animal(String nombre, Integer edad, String especie, String descripcion, String estado) {
-        this.nombreAnimal = nombre;
-        this.edadAnimal = edad;
-        this.especie = especie;
-        this.descripcion = descripcion;
-        this.estado = estado;
+        this.setNombre(nombre);
+        this.setEdad(edad);
+        this.setEspecie(especie);
+        this.setDescripcion(descripcion);
+        this.setEstado(estado);
         this.adoptado = false;
     }
 

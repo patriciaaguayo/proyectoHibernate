@@ -31,9 +31,10 @@ public class Refugio implements Serializable {
     }
 
     public Refugio(Familia familia, Animal animal, String nombreRefugio) {
-        this.familia = familia;
-        this.animal = animal;
-        this.nombreRefugio = nombreRefugio;
+
+        this.setFamilia(familia);
+        this.setAnimal(animal);
+        this.setNombreRefugio(nombreRefugio);
     }
 
     // GETTERS
@@ -56,10 +57,8 @@ public class Refugio implements Serializable {
 
     @Override
     public String toString() {
-        return "Refugio{" +
-                "familia=" + familia +
-                ", animal=" + animal +
-                ", nombreRefugio='" + nombreRefugio + '\'' +
-                '}';
+        return "\n Familia: " + familia +
+                ", Animal: " + animal +
+                ", Refugio: " + nombreRefugio;
     }
 }

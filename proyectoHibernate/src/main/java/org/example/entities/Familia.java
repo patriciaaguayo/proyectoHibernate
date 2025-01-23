@@ -30,10 +30,11 @@ public class Familia implements Serializable {
     public Familia() {}
 
     public Familia(String dni, Integer edad, String nombre, String ciudad) {
-        this.dni = dni;
-        this.edadPersona = edad;
-        this.nombrePersona = nombre;
-        this.ciudad = ciudad;
+
+        this.setDni(dni);
+        this.setEdad(edad);
+        this.setNombre(nombre);
+        this.setCiudad(ciudad);
     }
 
     // GETTERS
