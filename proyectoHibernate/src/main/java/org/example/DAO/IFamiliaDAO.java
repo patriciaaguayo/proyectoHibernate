@@ -35,12 +35,4 @@ public interface IFamiliaDAO {
 
     void eliminarFamilia(String dni);
 
-    /**
-     *
-     * @param nuevoNombre se le pasa el nuevo nombre de la familia
-     * @param nuevaEdad se le pasa la nueva edad de la familia
-     * @param nuevaCiudad se le pasa la nueva ciudad de la familia
-     */
-
-    void actualizarFamilia(String nuevoNombre, Integer nuevaEdad, String nuevaCiudad);
 }

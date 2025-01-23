@@ -88,6 +88,7 @@ public class Animal implements Serializable {
                 "perro", ESPECIE.PERRO,
                 "gato", ESPECIE.GATO,
                 "pajaro", ESPECIE.PAJARO,
+                "pájaro", ESPECIE.PAJARO,
                 "cerdo vietnamita", ESPECIE.CERDO_VIETNAMITA,
                 "serpiente", ESPECIE.SERPIENTE,
                 "camaleon", ESPECIE.CAMALEON,
@@ -139,7 +140,7 @@ public class Animal implements Serializable {
 
     @Override
     public String toString() {
-        return "Id: " + id +
+        return "\n Id: " + id +
                 ", Nombre: " + nombreAnimal +
                 ", Edad: " + edadAnimal +
                 ", Especie: " + especie +

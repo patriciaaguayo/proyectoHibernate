@@ -39,4 +39,11 @@ public interface IAnimalDAO {
      */
 
     void eliminarAnimal(Integer idAnimal);
+
+    /**
+     * Obtiene una lista de animales según el estado de adopción.
+     * @param adoptado estado de adopción (true para adoptados, false para no adoptados).
+     * @return Lista de animales con el estado de adopción indicado.
+     */
+    List<Animal> buscarPorEstadoAdopcion(boolean adoptado);
 }

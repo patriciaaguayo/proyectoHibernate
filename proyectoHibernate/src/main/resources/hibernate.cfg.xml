@@ -8,8 +8,7 @@
 
         <!-- Configuración de la conexión a la base de datos -->
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/refugio</property> <!-- ILERNA -->
-        <!--<property name="hibernate.connection.url">jdbc:mysql://localhost:3307/refugio</property>  CASA -->
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/refugio</property>
         <property name="hibernate.connection.username">root</property>
         <!-- <property name="hibernate.connection.password"> </property> -->
 
@@ -23,7 +22,7 @@
         <!-- <property name="hibernate.format_sql">true</property> -->
 
         <!-- Actualizar el esquema de la base de datos al iniciar -->
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- Definir las clases mapeadas -->
         <mapping class="org.example.entities.Animal"/>

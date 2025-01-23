@@ -2,7 +2,9 @@ package org.example.DAO;
 
 import org.example.Util.HibernateUtil;
 import org.example.entities.Animal;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
@@ -15,14 +17,10 @@ public class IAnimalDAOImpl implements IAnimalDAO {
      */
     @Override
     public List<Animal> obtenerAnimales() {
-
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
-            return session.createQuery("FROM Animal", Animal.class).list(); // Hibernate HQL query
-
+            return session.createQuery("FROM Animal", Animal.class).list();
         } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
+            throw new RuntimeException("Error al obtener la lista de animales", e);
         }
     }
 
@@ -32,17 +30,12 @@ public class IAnimalDAOImpl implements IAnimalDAO {
      */
     @Override
     public List<Animal> buscarPorEspecie(String especie) {
-
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
-            String hql = "FROM Animal WHERE Especie = :Especie";
-            Query<Animal> query = session.createQuery(hql, Animal.class);
-            query.setParameter("Especie", especie);
-            return query.list();
-
+            return session.createQuery("FROM Animal a WHERE a.especie = :especie", Animal.class)
+                    .setParameter("especie", especie)
+                    .list();
         } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
+            throw new RuntimeException("Error al buscar animales por especie", e);
         }
     }
 
@@ -51,20 +44,14 @@ public class IAnimalDAOImpl implements IAnimalDAO {
      */
     @Override
     public void registrarAnimal(Animal animal) {
-
         Transaction transaction = null;
-
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.save(animal);
             transaction.commit();
-
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-            throw e;
+            if (transaction != null) transaction.rollback();
+            throw new RuntimeException("Error al registrar un nuevo animal", e);
         }
     }
 
@@ -74,25 +61,20 @@ public class IAnimalDAOImpl implements IAnimalDAO {
      */
     @Override
     public void actualizarEstado(Integer idAnimal, String nuevoEstado) {
-
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-
             Animal animal = session.get(Animal.class, idAnimal);
             if (animal != null) {
                 animal.setEstado(nuevoEstado);
                 session.update(animal);
+                transaction.commit();
+            } else {
+                throw new RuntimeException("Animal con ID " + idAnimal + " no encontrado");
             }
-
-            transaction.commit();
-
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-            throw e;
+            if (transaction != null) transaction.rollback();
+            throw new RuntimeException("Error al actualizar el estado del animal", e);
         }
     }
 
@@ -107,17 +89,31 @@ public class IAnimalDAOImpl implements IAnimalDAO {
             transaction = session.beginTransaction();
 
             Animal animal = session.get(Animal.class, idAnimal);
+
             if (animal != null) {
                 session.delete(animal);
+                transaction.commit();
+
+            } else {
+                throw new RuntimeException("\n Animal con ID " + idAnimal + " no encontrado.");
             }
 
-            transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            e.printStackTrace();
-            throw e;
+            throw new RuntimeException("\n Error al eliminar el animal: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public List<Animal> buscarPorEstadoAdopcion(boolean adoptado) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("FROM Animal a WHERE a.adoptado = :adoptado", Animal.class)
+                    .setParameter("adoptado", adoptado)
+                    .list();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al buscar animales por estado de adopción", e);
         }
     }
 }

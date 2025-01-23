@@ -56,6 +56,7 @@ public class Main {
 
     public static void menuAnimales() {
         Scanner scanner = new Scanner(System.in);
+        GestionAnimal gestor = new GestionAnimal();
 
         while (true) {
             System.out.println("\n ----- Menu Animales -----");
@@ -76,23 +77,23 @@ public class Main {
                 switch (opcionInt) {
 
                     case 1:
-                        System.out.println("\n Has seleccionado la opción 1");
+                        gestor.registrarAnimal(); // Funciona
                         break;
 
                     case 2:
-                        System.out.println("\n Has seleccionado la opción 2");
+                        gestor.mostrarAnimales(); // Funciona
                         break;
 
                     case 3:
-                        System.out.println("\n Has seleccionado la opción 3");
+                        gestor.buscarAnimalesPorEspecie(); // Funciona
                         break;
 
                     case 4:
-                        System.out.println("\n Has seleccionado la opción 4");
+                        gestor.actualizarEstadoAnimal(); // Funciona
                         break;
 
                     case 5:
-                        System.out.println("\n Has seleccionado la opción 5");
+                        gestor.eliminarAnimal(); // Funciona pero falta configurar mensaje de error
                         break;
 
                     case 6:
@@ -123,8 +124,9 @@ public class Main {
             System.out.println("\n 1. Registrar familia");
             System.out.println(" 2. Mostrar familias");
             System.out.println(" 3. Eliminar familia");
-            System.out.println(" 4. Volver al menú principal");
-            System.out.println(" 5. Cerrar programa");
+            System.out.println(" 4. Buscar familia por DNI");
+            System.out.println(" 5. Volver al menú principal");
+            System.out.println(" 6. Cerrar programa");
 
             System.out.print("\n Seleccione una opción: ");
             String opcion = scanner.nextLine();
@@ -147,10 +149,14 @@ public class Main {
                         return;
 
                     case 4:
-                        System.out.println("\n Volviendo al menú principal...");
+                        System.out.println("\n Has seleccionado la opción 4");
                         return;
 
                     case 5:
+                        System.out.println("\n Volviendo al menú principal...");
+                        return;
+
+                    case 6:
                         System.out.println("\n Gracias por usar el programa. Adios!");
                         scanner.close();
                         System.exit(0);
@@ -173,8 +179,9 @@ public class Main {
             System.out.println("\n ----- Menu Adopciones -----");
             System.out.println("\n 1. Realizar adopcion");
             System.out.println(" 2. Mostrar adopciones");
-            System.out.println(" 3. Volver al menú principal");
-            System.out.println(" 4. Cerrar programa");
+            System.out.println(" 3. Buscar adopciones por familia (dni)");
+            System.out.println(" 4. Volver al menú principal");
+            System.out.println(" 5. Cerrar programa");
 
             System.out.print("\nSeleccione una opción: ");
             String opcion = scanner.nextLine();
@@ -193,10 +200,14 @@ public class Main {
                         break;
 
                     case 3:
+                        System.out.println("\n Has seleccionado la opción 3");
+                        break;
+
+                    case 4:
                         System.out.println("\n Volviendo al menú principal...");
                         return;
 
-                    case 4:
+                    case 5:
                         System.out.println("\n Gracias por usar el programa. Adios!");
                         scanner.close();
                         System.exit(0);
