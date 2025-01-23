@@ -1,121 +1,143 @@
 package org.example;
 
-import org.example.DAO.IAnimalDAOImpl;
-import org.example.entities.Animal;
-
+import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class GestionAnimal {
+public class Validacion {
+    public String solicitarDNI(Scanner scanner) {
+        String dni;
+        String[] letras = {"T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E"};
+        boolean dniValido;
 
-    private IAnimalDAOImpl animalDAO;
+        do {
+            System.out.print("\n Introduce el DNI (8 dígitos y una letra): ");
+            dni = scanner.nextLine().toUpperCase();
+            dniValido = dni.matches("\\d{8}[A-Z]");
 
-    public GestionAnimal() {
-        animalDAO = new IAnimalDAOImpl();
+            if (dniValido) {
+                int numero = Integer.parseInt(dni.substring(0, 8));
+                int resto = numero % 23;
+                String letraCorrecta = letras[resto];
+                if (!dni.substring(8).equals(letraCorrecta)) {
+                    System.out.println("\n La letra del DNI no corresponde al número. Inténtalo de nuevo.");
+                    dniValido = false;
+                }
+            } else {
+                System.out.println("\n Formato de DNI incorrecto. Debe contener 8 dígitos seguidos de una letra.");
+            }
+        } while (!dniValido);
+
+        return dni;
     }
 
     /**
-     * Método para registrar un nuevo animal
+     *
+     * @param scanner se le pasa el scanner
+     * @return devuelve el ID del animal
      */
 
-    public void registrarAnimal() {
+    public int solicitarIDAnimal(Scanner scanner) {
 
-        String nombre = obtenerNombre();
-        int edad = obtenerEdad();
-        String especie = obtenerEspecie();
-        String descripcion = obtenerDescripcion();
+        int idAnimal = -1;
+        while (true) {
+            System.out.print("\n Introduce el ID del animal: ");
+            String input = scanner.nextLine();
 
-        Animal nuevoAnimal = new Animal(nombre, edad, especie, descripcion, "Recien abandonado");
-
-        animalDAO.registrarAnimal(nuevoAnimal);
-        System.out.println("\n Animal registrado exitosamente.");
-    }
-
-    /**
-     * Método para mostrar todos los animales
-     */
-
-    public void mostrarAnimales() {
-        List<Animal> animales = animalDAO.obtenerAnimales();
-        if (animales.isEmpty()) {
-            System.out.println("\n No hay animales registrados.");
-        } else {
-            System.out.println("\n LISTA DE ANIMALES REGISTRADOS: ");
-            for (Animal animal : animales) {
-                System.out.println(animal);
+            try {
+                idAnimal = Integer.parseInt(input);
+                if (idAnimal <= 0) {
+                    System.out.println("\n El ID debe ser un número entero positivo. Inténtalo de nuevo.");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("\n Debe ingresar un número válido para el ID del animal. Inténtalo de nuevo.");
             }
         }
+        return idAnimal;
     }
 
     /**
-     * Método para buscar animales por especie
+     *
+     * @param scanner se le pasa el scanner
+     * @return devuelve el nombre
      */
 
-    public void buscarAnimalesPorEspecie() {
+    public String solicitarNombre(Scanner scanner) {
 
-        String especie = obtenerEspecie();
-
-        List<Animal> animales = animalDAO.buscarPorEspecie(especie);
-        if (animales.isEmpty()) {
-            System.out.println("\n No se encontraron animales de esa especie.");
-        } else {
-            for (Animal animal : animales) {
-                System.out.println(animal);
+        String nombre;
+        do {
+            System.out.print("\n Introduce el nombre de la persona: ");
+            nombre = scanner.nextLine().trim();
+            if (nombre.isEmpty()) {
+                System.out.println("\n El nombre no puede estar vacío. Inténtalo de nuevo.");
             }
-        }
+        } while (nombre.isEmpty());
+        return capitalizarPrimeraLetra(nombre);
     }
 
     /**
-     * Método para actualizar el estado de un animal
+     *
+     * @param scanner se le pasa el scanner
+     * @return devuelve la edad
      */
 
-    public void actualizarEstadoAnimal() {
+    public int solicitarEdad(Scanner scanner) {
+        int edad = -1;
+        do {
+            try {
+                System.out.print("\n Introduce la edad de la persona: ");
+                edad = Integer.parseInt(scanner.nextLine());
 
-        int id = validarIdAnimal();
-        String nuevoEstado = validarEstadoAnimal();
+                if (edad < 18) {
+                    System.out.println("\n La persona debe ser mayor de edad (18 años o más). Inténtalo de nuevo.");
 
-        animalDAO.actualizarEstado(id, nuevoEstado);
-        System.out.println("\n Estado actualizado exitosamente.");
-    }
+                } else if (edad <= 0) {
+                    System.out.println("\n La edad debe ser un número positivo. Inténtalo de nuevo.");
+                }
 
-    /**
-     * Método para eliminar un animal
-     */
-
-    public void eliminarAnimal() {
-        int id = validarIdAnimal();
-
-        try {
-            animalDAO.eliminarAnimal(id);
-            System.out.println("\n Animal eliminado exitosamente.");
-
-        } catch (RuntimeException e) {
-            System.out.println("\n Error: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Método para mostrar animales por estado de adopcion
-     */
-
-    public void mostrarAnimalesPorAdopcion() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("¿Mostrar animales adoptados? (true/false):");
-        boolean adoptado = Boolean.parseBoolean(scanner.nextLine());
-
-        List<Animal> animales = animalDAO.buscarPorEstadoAdopcion(adoptado);
-        if (animales.isEmpty()) {
-            System.out.println("\n No se encontraron animales con ese estado de adopción.");
-        } else {
-            for (Animal animal : animales) {
-                System.out.println(animal);
+            } catch (NumberFormatException e) {
+                System.out.println("\n Debe ingresar un número válido para la edad. Inténtalo de nuevo.");
             }
-        }
+
+        } while (edad < 18);
+        return edad;
     }
 
-    // MÉTODOS DE VALIDACIÓN
+    /**
+     *
+     * @param scanner se le pasa el scanner
+     * @return devuelve la ciudad
+     */
+
+    public String solicitarCiudad(Scanner scanner) {
+
+        String ciudad;
+
+        do {
+            System.out.print("\n Introduce la ciudad de la familia:");
+            ciudad = scanner.nextLine().trim();
+            if (ciudad.isEmpty()) {
+                System.out.println("\n La ciudad no puede estar vacía. Inténtalo de nuevo.");
+            }
+        } while (ciudad.isEmpty());
+        return capitalizarPrimeraLetra(ciudad);
+    }
+
+    /**
+     *
+     * @param palabra se le pasa la palabra
+     * @return devuelve la primera letra en mayúscula
+     */
+
+    private String capitalizarPrimeraLetra(String palabra) {
+        if (palabra == null || palabra.isEmpty()) {
+            return palabra;
+        }
+        return palabra.substring(0, 1).toUpperCase() + palabra.substring(1).toLowerCase();
+    }
 
     /**
      *
@@ -215,33 +237,6 @@ public class GestionAnimal {
 
     /**
      *
-     * @return devuelve el ID del animal
-     */
-
-    public int validarIdAnimal() {
-        Scanner scanner = new Scanner(System.in);
-        int id = -1;
-
-        while (true) {
-            System.out.println("\n Introduce el ID del animal a buscar:");
-
-            try {
-                id = Integer.parseInt(scanner.nextLine());
-                if (id > 0) {
-                    break;
-                } else {
-                    System.out.println("\n El ID debe ser un número positivo mayor a 0.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("\n ID inválido. Introduce un número entero válido.");
-            }
-        }
-
-        return id;
-    }
-
-    /**
-     *
      * @return devuelve el nuevo estado del animal
      */
 
@@ -273,16 +268,5 @@ public class GestionAnimal {
         return capitalizarPrimeraLetra(estado);
     }
 
-    /**
-     *
-     * @param palabra pasa la palabra a capitalizar
-     * @return devuelve la palabra capitalizada
-     */
 
-    private static String capitalizarPrimeraLetra(String palabra) {
-        if (palabra == null || palabra.isEmpty()) {
-            return palabra;
-        }
-        return palabra.substring(0, 1).toUpperCase() + palabra.substring(1).toLowerCase();
-    }
 }

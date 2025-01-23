@@ -15,6 +15,7 @@ public class IAnimalDAOImpl implements IAnimalDAO {
     /**
      * @return obtiene todos los animales
      */
+
     @Override
     public List<Animal> obtenerAnimales() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -28,6 +29,7 @@ public class IAnimalDAOImpl implements IAnimalDAO {
      * @param especie se le pasa el nombre de la especie
      * @return busca animales por especie
      */
+
     @Override
     public List<Animal> buscarPorEspecie(String especie) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -42,6 +44,7 @@ public class IAnimalDAOImpl implements IAnimalDAO {
     /**
      * @param animal se le pasa el animal a guardar
      */
+
     @Override
     public void registrarAnimal(Animal animal) {
         Transaction transaction = null;
@@ -59,6 +62,7 @@ public class IAnimalDAOImpl implements IAnimalDAO {
      * @param idAnimal    se le pasa el id del animal a actualizar
      * @param nuevoEstado se le pasa el nuevo estado del animal
      */
+
     @Override
     public void actualizarEstado(Integer idAnimal, String nuevoEstado) {
         Transaction transaction = null;
@@ -81,6 +85,7 @@ public class IAnimalDAOImpl implements IAnimalDAO {
     /**
      * @param idAnimal se le pasa el id del animal a eliminar
      */
+
     @Override
     public void eliminarAnimal(Integer idAnimal) {
 
@@ -106,6 +111,11 @@ public class IAnimalDAOImpl implements IAnimalDAO {
         }
     }
 
+    /**
+     * @param adoptado se le pasa el estado de adopcion del animal
+     * @return busca animales por estado de adopcion
+     */
+
     @Override
     public List<Animal> buscarPorEstadoAdopcion(boolean adoptado) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -123,6 +133,7 @@ public class IAnimalDAOImpl implements IAnimalDAO {
      * @param idAnimal ID del animal a buscar.
      * @return El animal con el ID especificado, o null si no se encuentra.
      */
+
     @Override
     public Animal buscarAnimalPorId(Integer idAnimal) {
         Session session = HibernateUtil.getSessionFactory().openSession();

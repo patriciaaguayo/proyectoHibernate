@@ -22,74 +22,80 @@ public class GestionRefugio {
         animalDAO = new IAnimalDAOImpl();
     }
 
+    /**
+     * Método para realizar una adopcion
+     */
+
     public void realizarAdopcion() {
-        // Revisar si hay familias en la tabla Familia
+
         List<Familia> familias = refugioDAO.obtenerFamilias();
         if (familias.isEmpty()) {
-            System.out.println("No hay familias disponibles para la adopción.");
+            System.out.println("\n No hay familias disponibles para la adopción.");
             return;
         }
 
-        // Revisar si hay animales disponibles para la adopción
         List<Animal> animales = refugioDAO.obtenerAnimalesDisponibles();
         if (animales.isEmpty()) {
-            System.out.println("No hay animales disponibles para la adopción.");
+            System.out.println("\n No hay animales disponibles para la adopción.");
             return;
         }
 
-        // Mostrar las familias y animales disponibles
-        System.out.println("Familias disponibles:");
+        System.out.println("\n FAMILIAS DISPONIBLES:");
         for (Familia familia : familias) {
             System.out.println(familia.getNombre() + " - " + familia.getDni());
         }
 
-        System.out.println("Animales disponibles:");
+        System.out.println("\n ANIMALES DISPONIBLES:");
         for (Animal animal : animales) {
             System.out.println(animal.getNombre() + " - " + animal.getId());
         }
 
-        // Pedir el DNI de la familia y el ID del animal
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Ingrese el DNI de la familia: ");
-        String dniFamilia = scanner.nextLine();
-        System.out.print("Ingrese el ID del animal: ");
-        int idAnimal = scanner.nextInt();
 
-        // Buscar la familia y el animal
+        String dniFamilia = solicitarDNI(scanner);
         Familia familia = familiaDAO.buscarPorDNI(dniFamilia);
-        Animal animal = animalDAO.buscarAnimalPorId(idAnimal);
+        if (familia == null) {
+            System.out.println("\n No se encontró ninguna familia con ese DNI.");
+            return;
+        }
 
-        // Crear un nuevo refugio
+        int idAnimal = solicitarIDAnimal(scanner);
+        Animal animal = animalDAO.buscarAnimalPorId(idAnimal);
+        if (animal == null) {
+            System.out.println("\n No se encontró ningún animal con ese ID.");
+            return;
+        }
+
         Refugio refugio = new Refugio();
         refugio.setFamilia(familia);
         refugio.setAnimal(animal);
         refugio.setNombreRefugio("Prado Verde");
         refugioDAO.guardarRefugio(refugio);
 
-        // Actualizar el estado del animal
         animal.setEstado("Próximamente en acogida");
         animal.setAdoptado(true);
         refugioDAO.actualizarAnimal(animal);
+
+        System.out.println("\n ¡Adopción realizada con éxito!");
     }
 
-    // Nuevo método: Listar adopciones realizadas
+    //
+
+    /**
+     * Método para mostrar las adopciones realizadas
+     */
 
     public void mostrarAdopciones() {
-        System.out.println("\nAdopciones realizadas:");
 
-        // Obtener adopciones realizadas
         List<Refugio> adopciones = refugioDAO.obtenerAdopcionesRealizadas();
 
-        // Verificar si hay adopciones
         if (adopciones.isEmpty()) {
-            System.out.println("No se han realizado adopciones todavía.");
+            System.out.println("\n No se han realizado adopciones todavía.");
             return;
         }
 
-        // Crear un mapa para agrupar animales por familia
         Map<Familia, List<Animal>> adopcionesPorFamilia = new HashMap<>();
 
-        // Agrupar los animales adoptados por familia
         for (Refugio refugio : adopciones) {
             Familia familia = refugio.getFamilia();
             Animal animal = refugio.getAnimal();
@@ -101,7 +107,6 @@ public class GestionRefugio {
 
         System.out.println("\n ADOPCIONES REALIZADAS:");
 
-        // Mostrar la información agrupada
         for (Map.Entry<Familia, List<Animal>> entry : adopcionesPorFamilia.entrySet()) {
             Familia familia = entry.getKey();
             List<Animal> animalesAdoptados = entry.getValue();
@@ -113,37 +118,99 @@ public class GestionRefugio {
         }
     }
 
+    /**
+     * Método para mostrar las adopciones realizadas por una familia
+     */
+
     public void mostrarAdopcionesPorFamilia() {
 
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Ingrese el DNI de la familia: ");
-        String dniFamilia = scanner.nextLine();
+        String dniFamilia = solicitarDNI(scanner);
+        Familia familia = familiaDAO.buscarPorDNI(dniFamilia);
 
-        System.out.println("\nAdopciones realizadas por la familia con DNI: " + dniFamilia);
+        if (familia == null) {
+            System.out.println("\n No se encontró ninguna familia con el DNI: " + dniFamilia);
+            return;
+        }
 
-        // Obtener adopciones realizadas
         List<Refugio> adopciones = refugioDAO.obtenerAdopcionesRealizadas();
 
-        // Filtrar las adopciones para encontrar las que corresponden al DNI proporcionado
         List<Refugio> adopcionesFamilia = adopciones.stream()
                 .filter(refugio -> refugio.getFamilia().getDni().equalsIgnoreCase(dniFamilia))
                 .toList();
 
-        // Verificar si la familia tiene adopciones
         if (adopcionesFamilia.isEmpty()) {
-            System.out.println("\n No se encontraron adopciones para la familia con DNI: " + dniFamilia);
+            System.out.println("\n La familia con DNI: " + dniFamilia + " no ha realizado ninguna adopción.");
             return;
         }
 
         System.out.println("\n ADOPCIONES REALIZADAS POR LA FAMILIA CON DNI: " + dniFamilia);
-
-        // Mostrar la información de la familia y los animales adoptados
-        Familia familia = adopcionesFamilia.get(0).getFamilia(); // Todas las adopciones tienen la misma familia
         System.out.println("\n Familia: " + familia.getNombre() + " (DNI: " + familia.getDni() + ")");
 
         for (Refugio refugio : adopcionesFamilia) {
             Animal animal = refugio.getAnimal();
             System.out.println("\n\t - Animal Adoptado: [ID: " + animal.getId() + ", Nombre: " + animal.getNombre() + ", Edad: " + animal.getEdad() + "]");
         }
+    }
+
+    // MÉTODOS DE VALIDACIÓN
+
+    /**
+     *
+     * @param scanner pasa el scanner
+     * @return devuelve el DNI
+     */
+
+    public String solicitarDNI(Scanner scanner) {
+        String dni;
+        String[] letras = {"T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E"};
+        boolean dniValido;
+
+        do {
+            System.out.print("\n Introduce el DNI (8 dígitos y una letra): ");
+            dni = scanner.nextLine().toUpperCase();
+            dniValido = dni.matches("\\d{8}[A-Z]");
+
+            if (dniValido) {
+                int numero = Integer.parseInt(dni.substring(0, 8));
+                int resto = numero % 23;
+                String letraCorrecta = letras[resto];
+                if (!dni.substring(8).equals(letraCorrecta)) {
+                    System.out.println("\n La letra del DNI no corresponde al número. Inténtalo de nuevo.");
+                    dniValido = false;
+                }
+            } else {
+                System.out.println("\n Formato de DNI incorrecto. Debe contener 8 dígitos seguidos de una letra.");
+            }
+        } while (!dniValido);
+
+        return dni;
+    }
+
+    /**
+     *
+     * @param scanner se le pasa el scanner
+     * @return devuelve el ID del animal
+     */
+
+    public int solicitarIDAnimal(Scanner scanner) {
+
+        int idAnimal = -1;
+        while (true) {
+            System.out.print("\n Introduce el ID del animal: ");
+            String input = scanner.nextLine();
+
+            try {
+                idAnimal = Integer.parseInt(input);
+                if (idAnimal <= 0) {
+                    System.out.println("\n El ID debe ser un número entero positivo. Inténtalo de nuevo.");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("\n Debe ingresar un número válido para el ID del animal. Inténtalo de nuevo.");
+            }
+        }
+        return idAnimal;
     }
 }

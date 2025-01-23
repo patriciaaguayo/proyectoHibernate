@@ -17,6 +17,7 @@ public class IRefugioDAOImpl implements IRefugioDAO {
     /**
      * @param refugio se le pasa el refugio
      */
+
     @Override
     public void guardarRefugio(Refugio refugio) {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -29,6 +30,7 @@ public class IRefugioDAOImpl implements IRefugioDAO {
     /**
      * @param animal se le pasa el animal a actualizar
      */
+
     @Override
     public void actualizarAnimal(Animal animal) {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -41,6 +43,7 @@ public class IRefugioDAOImpl implements IRefugioDAO {
     /**
      * @return devuelve familias
      */
+
     @Override
     public List<Familia> obtenerFamilias() {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -53,6 +56,7 @@ public class IRefugioDAOImpl implements IRefugioDAO {
     /**
      * @return devuelve animales
      */
+
     @Override
     public List<Animal> obtenerAnimalesDisponibles() {
         Session session = HibernateUtil.getSessionFactory().openSession();
